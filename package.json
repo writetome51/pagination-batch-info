@@ -1,0 +1,40 @@
+{
+  "name": "@writetome51/pagination-batch-info",
+  "version": "0.0.1",
+  "description": "A TypeScript/Javascript class with properties that give information about a dataset too big to be loaded all at once that is stored in memory one batch at-a-time, with the intention of paginating the batch",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/writetome51/pagination-batch-info.git"
+  },
+  "keywords": [
+    "data",
+    "load",
+    "retrieve",
+    "batch",
+    "batches",
+    "paginator",
+    "app",
+    "typescript",
+    "class"
+  ],
+  "author": "Steve Thompson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/writetome51/pagination-batch-info/issues"
+  },
+  "homepage": "https://github.com/writetome51/pagination-batch-info#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "@writetome51/base-class": "~1.0.0",
+    "error-if-not-integer": "~1.0.0",
+    "@writetome51/get-rounded-up-down": "~1.0.11",
+    "@writetome51/has-value-no-value": "~1.0.2",
+    "@writetome51/in-range": "~1.0.4",
+    "@writetome51/not": "~1.0.5"
+  }
+}
