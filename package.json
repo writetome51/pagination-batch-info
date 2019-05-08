@@ -1,6 +1,6 @@
 {
   "name": "@writetome51/pagination-batch-info",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A TypeScript/Javascript class with properties that give information about a dataset too big to be loaded all at once that is stored in memory one batch at-a-time, with the intention of paginating the batch",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
     "batch",
     "batches",
     "paginator",
-    "app",
+    "helper",
     "typescript",
     "class"
   ],

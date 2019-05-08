@@ -27,7 +27,7 @@ export class PaginationBatchInfo extends BaseClass {
 
 
 	constructor(
-		private __pageInfo: {itemsPerPage: number, totalPages: number}
+		private __pageInfo: { itemsPerPage: number, totalPages: number }
 	) {
 		super();
 	}
@@ -49,15 +49,17 @@ export class PaginationBatchInfo extends BaseClass {
 
 
 	set currentBatchNumber(value) {
-		if (not(inRange([1, this.totalBatches], value))) {
-			throw new Error(`You cannot set "currentBatchNumber" to a value outside the range 
-			of "totalBatches"`);
+		if (value !== undefined) {
+			if (not(inRange([1, this.totalBatches], value))) {
+				throw new Error(`You cannot set "currentBatchNumber" to a value outside the range 
+				of "totalBatches"`);
+			}
 		}
 		this.__currentBatchNumber = value;
 	}
 
 
-	get currentBatchNumber(): number {
+	get currentBatchNumber(): number | undefined {
 		return this.__currentBatchNumber;
 	}
 

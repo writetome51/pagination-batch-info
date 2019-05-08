@@ -9,7 +9,7 @@ import { BaseClass } from '@writetome51/base-class';
 export declare class PaginationBatchInfo extends BaseClass {
 
 	itemsPerBatch: number;
-	currentBatchNumber: number;
+	currentBatchNumber: number | undefined;
 	readonly currentBatchNumberIsLast: boolean;
 	readonly totalBatches: number;
 	readonly pagesPerBatch: number;

@@ -48,8 +48,10 @@ var PaginationBatchInfo = /** @class */ (function (_super) {
             return this.__currentBatchNumber;
         },
         set: function (value) {
-            if (not_1.not(in_range_1.inRange([1, this.totalBatches], value))) {
-                throw new Error("You cannot set \"currentBatchNumber\" to a value outside the range \n\t\t\tof \"totalBatches\"");
+            if (value !== undefined) {
+                if (not_1.not(in_range_1.inRange([1, this.totalBatches], value))) {
+                    throw new Error("You cannot set \"currentBatchNumber\" to a value outside the range \n\t\t\t\tof \"totalBatches\"");
+                }
             }
             this.__currentBatchNumber = value;
         },

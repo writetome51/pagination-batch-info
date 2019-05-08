@@ -26,12 +26,14 @@ constructor(
 ```ts
 itemsPerBatch: number
     // Must be set before doing anything else with the class.
-    // If itemsPerBatch / pageInfo.itemsPerPage does not divide evenly, 
-    // itemsPerBatch is decremented until they do.  So, sometimes after 
-    // assigning a value to itemsPerBatch, itemsPerBatch will change slightly.
+    // If it does not divide evenly by `pageInfo.itemsPerPage` 
+    // (from the constructor), its value is automatically lowered until it does.
+    // Note: whenever itemsPerBatch changes, this.currentBatchNumber becomes 
+    // undefined.
 
-currentBatchNumber: number
+currentBatchNumber: number | undefined
     // Intended to refer to the batch that is currently loaded for viewing.
+    // You can set it to undefined, if, say, you want to empty the batch.
 
 currentBatchNumberIsLast : boolean  // read-only
     // Whether or not this.currentBatchNumber is the last batch in the dataset.
