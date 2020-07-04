@@ -1,7 +1,7 @@
 {
-  "name": "@writetome51/pagination-batch-info",
-  "version": "1.0.0",
-  "description": "A TypeScript/Javascript class with properties that give information about a dataset too big to be loaded all at once that is stored in memory one batch at-a-time, with the intention of paginating the batch",
+  "name": "@writetome51/pagination-load-info",
+  "version": "0.0.1",
+  "description": "A TypeScript/Javascript class with properties that give information about a dataset too big to be loaded all at once that is stored in memory one load at-a-time, with the intention of paginating the load",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -9,13 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/writetome51/pagination-batch-info.git"
+    "url": "git+https://github.com/writetome51/pagination-load-info.git"
   },
   "keywords": [
     "data",
     "load",
-    "batch",
-    "batches",
+    "loads",
     "paginator",
     "helper",
     "typescript",
@@ -24,9 +23,9 @@
   "author": "Steve Thompson",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/writetome51/pagination-batch-info/issues"
+    "url": "https://github.com/writetome51/pagination-load-info/issues"
   },
-  "homepage": "https://github.com/writetome51/pagination-batch-info#readme",
+  "homepage": "https://github.com/writetome51/pagination-load-info#readme",
   "devDependencies": {},
   "dependencies": {
     "@writetome51/base-class": "~1.0.0",

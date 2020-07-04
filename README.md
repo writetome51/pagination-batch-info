@@ -1,8 +1,8 @@
-# PaginationBatchInfo
+# PaginationLoadInfo
 
 A TypeScript/Javascript class that has properties that give information about a  
-dataset too big to be loaded all at once that is stored in memory one batch  
-at-a-time, with the intention of paginating the batch.
+dataset too big to be loaded all at once that is stored in memory one load  
+at-a-time, with the intention of paginating the load.
 
 ## Constructor
 
@@ -11,45 +11,40 @@ at-a-time, with the intention of paginating the batch.
 
 ```ts
 constructor(
-    pageInfo: {itemsPerPage: number, totalPages: number}
-        // Its properties are used to calculate `totalBatches` and
-        // validate `itemsPerBatch` and `currentBatchNumber`
-) 
+    __pageInfo: { 
+        getItemsPerPage: () => number, 
+        getTotalPages: () => number 
+    }
+)
 ```
 </details>
 
 
 ## Properties
-<details>
-<summary>view properties</summary>
 
 ```ts
-itemsPerBatch: number
-    // Must be set before doing anything else with the class.
-    // If it does not divide evenly by `pageInfo.itemsPerPage` 
-    // (from the constructor), its value is automatically lowered until it does.
-    // Note: whenever itemsPerBatch changes, this.currentBatchNumber becomes 
-    // undefined.
-
-currentBatchNumber: number | undefined
-    // Intended to refer to the batch that is currently loaded for viewing.
-    // You can set it to undefined, if, say, you want to empty the batch.
-
-currentBatchNumberIsLast : boolean  // read-only
-    // Whether or not this.currentBatchNumber is the last batch in the dataset.
-
-totalBatches: number  // read-only
-
-pagesPerBatch: number  // read-only
-
 className: string // read-only
 ```
-</details>
-
 
 ## Methods
 <details>
 <summary>view methods</summary>
+
+```
+setItemsPerLoad(value: number): void
+
+getItemsPerLoad(): number
+
+setCurrentLoadNumber(value: number): void
+
+getCurrentLoadNumber(): number | undefined
+
+currentLoadIsLast(): boolean
+
+getTotalLoads(): number
+
+getPagesPerLoad(): number
+```
 
 The methods below are not important to know about in order to use this  
 class.  They're inherited from [BaseClass](https://github.com/writetome51/typescript-base-class#baseclass) .
@@ -98,19 +93,19 @@ protected   _errorIfPropertyHasNoValue(
 
 ## Inheritance Chain
 
-PaginationBatchInfo<--[BaseClass](https://github.com/writetome51/typescript-base-class#baseclass)
+PaginationLoadInfo<--[BaseClass](https://github.com/writetome51/typescript-base-class#baseclass)
 
 
 ## Installation
 
-`npm install @writetome51/pagination-batch-info`
+`npm i @writetome51/pagination-load-info`
 
 ## Loading
 ```ts
 // if using TypeScript:
-import { PaginationBatchInfo } from '@writetome51/pagination-batch-info';
+import { PaginationLoadInfo } from '@writetome51/pagination-load-info';
 // if using ES5 JavaScript:
-var PaginationBatchInfo = require('@writetome51/pagination-batch-info').PaginationBatchInfo;
+var PaginationLoadInfo = require('@writetome51/pagination-load-info').PaginationLoadInfo;
 ```
 
 ## License

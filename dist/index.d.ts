@@ -2,33 +2,48 @@ import { BaseClass } from '@writetome51/base-class';
 
 
 /********************
- Has properties that give information about a dataset too big to be loaded all at once that
- is stored in memory one batch at-a-time, with the intention of paginating the batch.
+ Gives information about a dataset too big to be loaded all at once that
+ is stored in memory one load at-a-time, with the intention of paginating the load.
  *******************/
 
-export declare class PaginationBatchInfo extends BaseClass {
-
-	itemsPerBatch: number;
-	currentBatchNumber: number | undefined;
-	readonly currentBatchNumberIsLast: boolean;
-	readonly totalBatches: number;
-	readonly pagesPerBatch: number;
+export declare class PaginationLoadInfo extends BaseClass {
 
 	private __pageInfo;
-	private __itemsPerBatch;
-	private __currentBatchNumber;
+	private __itemsPerLoad;
+	private __currentLoadNumber;
 
 
 	constructor(
 		__pageInfo: {
-			itemsPerPage: number;
-			totalPages: number;
+			getItemsPerPage: () => number;
+			getTotalPages: () => number;
 		}
 	);
 
 
+	setItemsPerLoad(value: number): void;
+
+
+	getItemsPerLoad(): number;
+
+
+	setCurrentLoadNumber(value: number): void;
+
+
+	getCurrentLoadNumber(): number | undefined;
+
+
+	currentLoadIsLast(): boolean;
+
+
+	getTotalLoads(): number;
+
+
+	getPagesPerLoad(): number;
+
+
 	private __errorIfValueIsNotOneOrGreater;
-	private __checkValueOf_itemsPerBatch;
-	private __ensure_itemsPerBatch_isCompatibleWith_itemsPerPage;
+	private __checkValueOf_itemsPerLoad;
+	private __ensure_itemsPerLoad_isCompatibleWith_itemsPerPage;
 
 }

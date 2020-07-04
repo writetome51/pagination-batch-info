@@ -7,114 +7,108 @@ import { not } from '@writetome51/not';
 
 
 /********************
- Has properties that give information about a dataset too big to be loaded all at once that
- is stored in memory one batch at-a-time, with the intention of paginating the batch.
+ Gives information about a dataset too big to be loaded all at once that
+ is stored in memory one load at-a-time, with the intention of paginating the load.
  *******************/
 
 
-export class PaginationBatchInfo extends BaseClass {
+export class PaginationLoadInfo extends BaseClass {
 
-	// `itemsPerBatch` must be set before doing anything else with the class.
-	// itemsPerBatch  (total number of items the paginator can handle at once.)
-	// currentBatchNumber
-
-	// currentBatchNumberIsLast : boolean  (read-only)
-	// totalBatches  (read-only)
-	// pagesPerBatch  (read-only)
-
-	private __itemsPerBatch: number;
-	private __currentBatchNumber: number;
+	private __itemsPerLoad: number;
+	private __currentLoadNumber: number;
 
 
 	constructor(
-		private __pageInfo: { itemsPerPage: number, totalPages: number }
+		private __pageInfo: { getItemsPerPage: () => number, getTotalPages: () => number }
 	) {
 		super();
 	}
 
 
-	set itemsPerBatch(value) {
-		this.__errorIfValueIsNotOneOrGreater(value, 'itemsPerBatch');
-
-		this.__checkValueOf_itemsPerBatch(value);
+	setItemsPerLoad(value) {
+		this.__errorIfValueIsNotOneOrGreater(value, 'items per load');
+		this.__checkValueOf_itemsPerLoad(value);
 	}
 
 
-	get itemsPerBatch(): number {
-		this._errorIfPropertyHasNoValue('__itemsPerBatch', 'itemsPerBatch');
+	getItemsPerLoad(): number {
+		this._errorIfPropertyHasNoValue('__itemsPerLoad', 'itemsPerLoad');
 
-		this.__checkValueOf_itemsPerBatch();
-		return this.__itemsPerBatch;
+		this.__checkValueOf_itemsPerLoad();
+		return this.__itemsPerLoad;
 	}
 
 
-	set currentBatchNumber(value) {
+	setCurrentLoadNumber(value) {
 		if (value !== undefined) {
-			if (not(inRange([1, this.totalBatches], value))) {
-				throw new Error(`You cannot set "currentBatchNumber" to a value outside the range 
-				of "totalBatches"`);
+			if (not(inRange([1, this.getTotalLoads()], value))) {
+				throw new Error(`You cannot set currentLoadNumber to a value outside the range 
+				of totalLoads`);
 			}
 		}
-		this.__currentBatchNumber = value;
+		this.__currentLoadNumber = value;
 	}
 
 
-	get currentBatchNumber(): number | undefined {
-		return this.__currentBatchNumber;
+	getCurrentLoadNumber(): number | undefined {
+		return this.__currentLoadNumber;
 	}
 
 
-	get currentBatchNumberIsLast(): boolean {
-		return (this.currentBatchNumber === this.totalBatches);
+	currentLoadIsLast(): boolean {
+		return (this.getCurrentLoadNumber() === this.getTotalLoads());
 	}
 
 
-	get totalBatches(): number {
-		return getRoundedUp(this.__pageInfo.totalPages / this.pagesPerBatch);
+	getTotalLoads(): number {
+		return getRoundedUp(this.__pageInfo.getTotalPages() / this.getPagesPerLoad());
 	}
 
 
-	get pagesPerBatch(): number {
+	getPagesPerLoad(): number {
 		// Should not have to be rounded.  They will divide evenly.
-		return (this.itemsPerBatch / this.__pageInfo.itemsPerPage);
+		return (this.getItemsPerLoad() / this.__pageInfo.getItemsPerPage());
 	}
 
 
 	private __errorIfValueIsNotOneOrGreater(value, property): void {
 		errorIfNotInteger(value);
-		if (value < 1) throw new Error(`The property "${property}" must be at least 1.`);
+		if (value < 1) throw new Error(`The "${property}" must be at least 1.`);
 	}
 
 
-	private __checkValueOf_itemsPerBatch(newValue = undefined) {
-		let oldValue = this.__itemsPerBatch;
-		if (hasValue(newValue)) this.__itemsPerBatch = newValue;
+	private __checkValueOf_itemsPerLoad(newValue = undefined) {
+		let oldValue = this.__itemsPerLoad;
+		if (hasValue(newValue)) this.__itemsPerLoad = newValue;
 
-		this.__ensure_itemsPerBatch_isCompatibleWith_itemsPerPage();
+		this.__ensure_itemsPerLoad_isCompatibleWith_itemsPerPage();
 
-		// Whenever itemsPerBatch changes, there can no longer be a currentBatchNumber.  This would
+		// Whenever itemsPerLoad changes, there can no longer be a currentLoadNumber.  This would
 		// cause logic errors.  It must be unset so the user is forced to reset it.
 
-		if (oldValue !== this.__itemsPerBatch) this.__currentBatchNumber = undefined;
+		if (oldValue !== this.__itemsPerLoad) this.__currentLoadNumber = undefined;
 	}
 
 
-	// If itemsPerBatch / itemsPerPage does not divide evenly, itemsPerBatch is decremented until
-	// they do.  So, sometimes after assigning a value to either itemsPerPage or itemsPerBatch,
-	// itemsPerBatch will change slightly.
+	// If itemsPerLoad / itemsPerPage does not divide evenly, itemsPerLoad is decremented until
+	// they do.  So, sometimes after assigning a value to either itemsPerPage or itemsPerLoad,
+	// itemsPerLoad will change slightly.
 
-	private __ensure_itemsPerBatch_isCompatibleWith_itemsPerPage(): void {
+	private __ensure_itemsPerLoad_isCompatibleWith_itemsPerPage(): void {
 
-		if (hasValue(this.__pageInfo.itemsPerPage)) {
-			if (this.__itemsPerBatch < this.__pageInfo.itemsPerPage) {
+		let itemsPerPage = this.__pageInfo.getItemsPerPage();
+
+		if (hasValue(itemsPerPage)) {
+			if (this.__itemsPerLoad < itemsPerPage) {
 				throw new Error(
-					`The property "itemsPerBatch" cannot be less than "itemsPerPage"`
+					`The items per load cannot be less than items per page`
 				);
 			}
-			while ((this.__itemsPerBatch % this.__pageInfo.itemsPerPage) !== 0) --this.__itemsPerBatch;
+			while ((this.__itemsPerLoad % itemsPerPage) !== 0) --this.__itemsPerLoad;
 		}
 
 	}
 
 
 }
+
