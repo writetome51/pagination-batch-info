@@ -111,4 +111,3 @@ export class PaginationLoadInfo extends BaseClass {
 
 
 }
-
